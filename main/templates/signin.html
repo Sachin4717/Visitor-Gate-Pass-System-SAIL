@@ -1,0 +1,104 @@
+
+<script type="text/javascript">
+  $(document).ready(function(){
+        $('#refresh-captcha').on('click', function () {
+            $.getJSON('/refresh_captcha/', function (data) {
+                $('#captcha_image').attr('src', data.image_url); // Update image
+                $('#captcha_key').val(data.key);                 // Update hidden input
+            });
+    });
+  });
+</script>
+<style type="text/css">
+
+    #captcha_image {
+        border:1px solid #555!important;
+    }
+
+    .login-form {
+        border-radius: 10px !important;
+        -moz-border-radius: 10px !important;
+        -webkit-border-radius: 10px !important;
+    }
+
+    .input-group-text {
+        background: color-mix(in srgb, var(--accent-color), transparent 15%);
+        font-weight: bold !important;
+        color: white !important;
+        padding:4px 16px!important;
+    }
+
+</style>
+<!-- Hero Section -->
+<section id="hero" class="hero section" style="padding-top: -30px!important;height: 100vh!important;">
+    <div class="container">
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    <div class="row gy-4">
+        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+            <h1 data-aos="fade-up">Welcome to <br>ACVS Admin Portal!</h1>
+            <p data-aos="fade-up" data-aos-delay="100">User Friendly Platform For Managing Complaints.</p>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out">
+        <div class="p-2 p-lg-3 pb-0" data-aos="fade-up" data-aos-duration="2000" data-delay="2000">
+            <div class="mt-0 p-2 p-lg-3 login-form shadow pt-4">
+                <form id="account" method="post">
+                    <img src="/static/img/logo.png" style="height:65px;" class="img-fluid" alt="">
+                    <div class="login-wrap">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{captcha.key}}" id="captcha_key" name="captcha_key"/>
+                        
+                        <p class="section-title" style="white-space:nowrap!important;text-align:left!important;">
+                            <i class="bx bx-sign-in"></i> Login Using <b class="text-title">ACVS Admin</b> Account
+                        </p>
+                        <div class="input-group m-1">
+                            <label class="input-group-text">
+                                <b class="bx bx-user"></b>
+                            </label>
+                            <input type="text" name="username" value="ranjeet.kr@sail.in" class="form-control" aria-required="true" placeholder="User Name" required/>
+                        </div>
+                        <div class="input-group m-1">
+                            <label class="input-group-text">
+                                <b class="bx bx-lock"></b>
+                            </label>
+                            <input type="password" value="Test@2025" name="password" class="form-control" aria-required="true" placeholder="password" required/>
+                        </div>
+                        <div class="input-group m-1">
+                            <label id="refresh-captcha" class="input-group-text" style="cursor:pointer!important;">
+                                <b class="bi bi-arrow-repeat"></b>
+                            </label>
+                            <img id="captcha_image" src="{{captcha.image_url}}" style="height:36px!important;" class="img-fluid" />
+                            <input type="text" class="form-control" name="captcha" placeholder="Captcha" required />
+                        </div>
+                        <div class="my-2 d-flex justify-content-between align-items-center">
+                            {% if messages %}
+                            <div class="text-danger">
+                                {% for message in messages %}
+                                    {% if 'error' in message.tags %}
+                                        <p class="{{message.tags}} bx-flashing">{{ message }}</p>
+                                    {%endif%}
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <a href="/forgot-password" class="auth-link text-black">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn-get-started btn">
+                            Login <i class="bi bi-arrow-right"></i>
+                        </button>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    </section><!-- /Hero Section -->

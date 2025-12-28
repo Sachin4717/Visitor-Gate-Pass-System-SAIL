@@ -1,0 +1,140 @@
+
+<script type="text/javascript">
+  $(document).ready(function(){
+        $('#refresh-captcha').on('click', function () {
+            $.getJSON('/refresh_captcha/', function (data) {
+                $('#captcha_image').attr('src', data.image_url); // Update image
+                $('#captcha_key').val(data.key);                 // Update hidden input
+            });
+    });
+  });
+</script>
+<style type="text/css">
+
+    #captcha_image {
+        border:1px solid #555!important;
+    }
+
+    .login-form {
+        border-radius: 10px !important;
+        -moz-border-radius: 10px !important;
+        -webkit-border-radius: 10px !important;
+    }
+
+    .input-group-text {
+        background: color-mix(in srgb, var(--accent-color), transparent 15%);
+        font-weight: bold !important;
+        color: white !important;
+        padding:4px 16px!important;
+    }
+
+</style>
+<!-- Hero Section -->
+<section id="hero" class="hero section" style="padding-top: -30px!important;height: 100vh!important;">
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <p class="text-{{message.tags}}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    <div class="row gy-4">
+        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+            <h1 data-aos="fade-up">Welcome to <br>ACVS Admin Portal!</h1>
+            <p data-aos="fade-up" data-aos-delay="100">User Friendly Platform For Managing Complaints.</p>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out">
+        <div class="p-2 p-lg-3 pb-0" data-aos="fade-up" data-aos-duration="2000" data-delay="2000">
+            <div class="mt-0 p-2 p-lg-3 login-form shadow pt-4">
+                <form method="post" id="personForm" data-bv-live="enabled">
+                    {% csrf_token %}
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            {{ form.email }}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">OTP</label>
+                            {{ form.otp }}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Name</label>
+                            <div class="input-group">
+                                {{ form.name }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Mobile Number</label>
+                            <div class="input-group">
+                                {{ form.mobno }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Organization</label>
+                            <div class="input-group">
+                                {{ form.org }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">AADHAR (Last 4 Digit Only)</label>
+                            <div class="input-group">
+                                {{ form.idno }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Department</label>
+                            <div class="input-group">
+                                {{ form.deptt }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Designation</label>
+                            <div class="input-group">
+                                {{ form.desig }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Gender</label>
+                            <div class="input-group">
+                                {{ form.gndr }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Age</label>
+                            <div class="input-group">
+                                {{ form.age }}
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Password</label>
+                            <div class="input-group">
+                                {{ form.password }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            <div class="input-group">
+                                {{ form.confirm_password }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    </section><!-- /Hero Section -->

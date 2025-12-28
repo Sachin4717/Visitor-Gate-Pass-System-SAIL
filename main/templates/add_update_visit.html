@@ -1,0 +1,349 @@
+<script src="/static/js/underscore-min.js"></script>
+<script src="/static/js/moment.min.js"></script>
+<script src="/static/js/daterangepicker.js"></script>
+<link href="/static/css/daterangepicker.css" rel="stylesheet">
+<script src="/static/ngJS/ngAddUpdateVisit.js?version=12072025" type="text/javascript"></script>
+<style type="text/css">
+    .bv-form .form-control {
+        padding: 2px 4px !important;
+        height: auto !important;
+    }
+
+    .input-group>.input-group-text:nth-of-type(1) {
+        min-width: 110px !important;
+        max-width: 110px !important;
+        width: 110px !important;
+        padding: 5px !important;
+        font-size: 12px !important;
+        font-weight: bold !important;
+        background-color: #22608e !important;
+        color: #f1efef !important;
+    }
+
+    .input-group>.input-group-text:nth-of-type(2) {
+        min-width: 40px !important;
+        padding: 5px !important;
+        font-size: 12px !important;
+        font-weight: bold !important;
+        background-color: #effa91ff !important;
+    }
+
+    .nav-tabs .nav-link {
+        background-color: #f1efef !important;
+        margin: 2px 2px;
+    }
+
+    .nav-tabs .nav-link.active {
+        background-color: #22608e !important;
+        color: #f1efef !important;
+    }
+</style>
+<div class="content-wrapper" ng-app="eDeskApp" ng-controller="eDeskCtrl">
+    <p style="display:none;" id="modelData">{{jsontxt}}</p>
+    <div class="container">
+        <p class="title-text"><b>Add Visit Details For:</b></p>
+        <div class="alert alert-success">
+            <p>
+                <b>Name: </b> {{user.name}},
+                <b>Designation: </b>{{user.desig}}, <b>Department: </b>{{user.deptt}} <b>Organization: </b>
+                {{user.org}}<br>
+                <b>EmailId: </b><a href="mailto:{{user.email}}"><b class="bx bx-envelope"></b> {{user.email}}</a> |
+                <b>Mobile No: </b> <a href="tel:{{user.mobno}}"><b class="bx bx-mobile"></b> {{user.mobno}}</a> <br>
+                <b>Gender: </b> {{user.gndr}}, <b>Age: </b> {{user.age}}
+            </p>
+        </div>
+        <form name="frmVisit" id="frmVisit" 
+            method="post"
+            class="mt-3 bv-form frmVisit"
+            data-bv-feedbackicons-valid="bx bxs-check-circle" 
+            data-bv-feedbackicons-invalid="bx bxs-x-circle"
+            data-bv-feedbackicons-validating="bx bxs-refresh" 
+            novalidate>
+            {% csrf_token %}
+            <input type="hidden" name="ID" value="{{visit.id}}">
+            <input type="hidden" name="uid" value="{{user.uuid}}">
+            <input type="hidden" name="name" value="{{user.name}}">
+            <input type="hidden" name="desig" value="{{user.desig}}">
+            <input type="hidden" name="deptt" value="{{user.deptt}}">
+            <input type="hidden" name="org" value="{{user.org}}">
+            <input type="hidden" name="email" value="{{user.email}}">
+            <input type="hidden" name="mobile" value="{{user.mobile}}">
+            <input type="hidden" name="gndr" value="{{user.gndr}}">
+            <input type="hidden" name="age" value="{{user.age}}">
+            <input type="hidden" id="vstmembers" name="vstmembers">
+            <div class="alert alert-light">
+                <p class="title-text"><b>Please provide detail and Purpose of the visit including name/mobile/email of
+                        the person to meet</b></p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Visit Type
+                            </div>
+                            <select ng-model="visit.vsttype" class="form-control" name="vsttype" ng-minlength="1"
+                                required enter-as-tab>
+                                <option value="">--Select visit type</option>
+                                <option value="Official">Official</option>
+                                <option value="Personal">Personal</option>
+                            </select>
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Purpose <br>of Visit
+                            </div>
+                            <textarea rows="3" ng-model="visit.vstpurpose" type="text" class="form-control"
+                                name="vstpurpose" ng-minlength="20" required enter-as-tab></textarea>
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Department
+                            </div>
+                            <select ng-model="visit.vstdeptt" class="form-control" name="vstdeptt" ng-minlength="1"
+                                required enter-as-tab>
+                                <option value="">--Select Department</option>
+                                <option value="[[deptt]]" ng-repeat="deptt in deptts">[[deptt]]</option>
+                            </select>
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Name
+                            </div>
+                            <input ng-model="visit.vstname" type="text" class="form-control" name="vstname"
+                                ng-minlength="1" enter-as-tab />
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Mobile
+                            </div>
+                            <input ng-model="visit.vstmobno" type="text" class="form-control" name="vstmobno"
+                                ng-minlength="1" enter-as-tab />
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Email Id
+                            </div>
+                            <input ng-model="visit.vstemail" type="email" class="form-control" name="vstemail"
+                                ng-minlength="1" enter-as-tab />
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <!-- visist date-->
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Start Date
+                            </div>
+                            <input ng-change="DateChanged('vststartdt')" ng-model="visit.vststartdt" type="text" class="form-control datepicker" name="vststartdt"
+                                ng-minlength="1" required enter-as-tab />
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> End Date
+                            </div>
+                            <input ng-change="DateChanged('vstenddt')" ng-model="visit.vstenddt" type="text" class="form-control datepicker" name="vstenddt"
+                                ng-minlength="1" enter-as-tab required/>
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Days
+                            </div>
+                            <input ng-model="visit.vstdays" type="number" class="form-control" name="vstdays"
+                                ng-minlength="1" min="1" max="5" enter-as-tab required />
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Vehicle
+                            </div>
+                            <select ng-model="visit.vehicle" class="form-control" name="vehicle" required
+                                enter-as-tab>
+                                <option value="">--Select--</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <!-- Show vehicle details if vehicle is Yes -->
+                    <div class="col-md-6" ng-if="visit.vehicle === 'Yes'">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Vehicle No.
+                            </div>
+                            <input ng-model="visit.vehicleno" type="text" class="form-control" name="vehicleno"
+                                ng-minlength="2" placeholder="Enter Vehicle Number" required enter-as-tab />
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" ng-if="visit.vehicle === 'Yes'">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <b class='bx bx-chevron-right text-light'></b> Driver id
+                            </div>
+                            <input ng-model="visit.driveridno" type="text" class="form-control" name="driveridno"
+                                placeholder="Enter Driving Licence No." enter-as-tab required />
+                            <div class="input-group-text"></div>
+                        </div>
+                    </div>
+                </div>
+                <span class="btn btn-sm btn-link" ng-click="AddMember()" data-bs-toggle="modal" data-bs-target="#mdlAddUpdatemember">
+                    <b class="bx bx-plus-circle"></b> Add New Member
+                </span>
+                <div class="row members">
+                    <div class="col-lg-3" ng-repeat="member in members track by $index">
+                        <div class="card">
+                            <div class="card-body">
+                                <p style="font-size:12px;">
+                                    <b>Name: </b> [[member.name]],
+                                    <b>Designation: </b>[[member.desg]], <b>Organization: </b>[[member.org]]<br>
+                                    <b>EmailId: </b><a href="mailto:[[member.email]]"><b class="bx bx-envelope"></b> [[member.email]]</a> |
+                                    <b>Mobile No: </b> <a href="tel:[[member.mob]]"><b class="bx bx-mobile"></b> [[member.mob]]</a> <br>
+                                    <b>Gender: </b> [[member.gndr]], <b>Age: </b> [[member.age]]
+                                    <b>Id: </b> XXXX XXXX [[member.id]]
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="btn btn-sm btn-warning btn-rounded" ng-click="UpdateMember($index)"><b class="bx bx-edit"></b></span>
+                                <span class="btn btn-sm btn-danger btn-rounded" ng-click="DeleteMember($index)"><b class="bx bx-trash"></b></span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <button type="submit" ng-disablaed="!(frmVisit.$valid)" ng-click="SubmitForm('frmVisit')" class="btn btn-sm btn-success text-light">
+                    <b class="bx bx-save"></b> Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="modal" id="mdlAddUpdateMember" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" style="max-width:75%!important;">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Update Member</h5>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+            <div class="modal-body">
+                <p>[[member]]</p>
+                <form name="frmMember" id="frmMember" class="mt-3 bv-form frmMember"
+                    data-bv-feedbackicons-valid="bx bxs-check-circle" data-bv-feedbackicons-invalid="bx bxs-x-circle"
+                    data-bv-feedbackicons-validating="bx bxs-refresh" novalidate>
+                    <!-- Personal Information Section -->
+                            <div class="form-section">
+                                <p class="title-text"><i class="bx bx-user"></i> Please Provide Member Information</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-text">Full Name</div>
+                                            <input ng-model="member.name" type="text" class="form-control" name="name"
+                                            ng-minlength="1" required enter-as-tab />
+                                            <div class="input-group-text"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-text">Gender</div>
+                                            <select name="gndr" class="form-control" ng-model="member.gndr" required enter-as-tab>
+                                                <option value="--select--"></option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                            <div class="input-group-text"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-text">Organization</div>
+                                            <input ng-model="member.org" type="text" class="form-control" name="org"
+                                            ng-minlength="1" required enter-as-tab />
+                                            <div class="input-group-text"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-text">Designation</div>
+                                            <input ng-model="member.desg" type="text" class="form-control" name="desg"
+                                            ng-minlength="1" required enter-as-tab />
+                                            <div class="input-group-text"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-text">Email Address</div>
+                                            <input ng-model="member.email" type="email" class="form-control" name="email"
+                                            ng-minlength="1" required enter-as-tab />
+                                            <div class="input-group-text"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-text">Mobile Number</div>
+                                            <input ng-model="member.mob" type="text" class="form-control" name="mob"
+                                            ng-minlength="1" required enter-as-tab />
+                                            <div class="input-group-text"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-text">Age</div>
+                                            <input ng-model="member.age" type="number" min="18" class="form-control" name="age"
+                                            ng-minlength="1" required enter-as-tab />
+                                            <div class="input-group-text"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-text">AADHAR (Last 4 Digits)</div>
+                                            <input ng-model="member.id" type="number" min="1000" max="9999" class="form-control" name="id"
+                                            ng-minlength="1" required enter-as-tab />
+                                            <div class="input-group-text"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button ng-disablaed="!(frmMember.$valid)" ng-click="UpdateMembers()" class="btn btn-sm btn-success text-light">
+                                    <b class="bx bx-save"></b> Save Changes
+                                </button>
+                            </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</div>

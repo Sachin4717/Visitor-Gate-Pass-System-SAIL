@@ -1,0 +1,61 @@
+<style type="text/css">
+.bv-form .form-control {
+    padding: 2px 4px !important;
+    height:auto!important;
+    font-size:12px!important;
+    }
+</style>
+<div class="content-wrapper">
+    <p style="display:none;" id="modelData">{{jsontxt}}</p>
+    <div class="container">
+        
+        <p class="title-text">
+            <b>Manage Accounts ({{accounts|length}})</b>
+            
+        </p>
+        <div class="alert alert-info">
+                <p><i>If you want to add/update accounts, upload updated excel to change accounts.</i></p>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-sm btn-info" type="submit">Update Accounts</button>
+                    <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+                </form>
+            </div>
+        <div class="row">
+                <table class="table datatable table-bordered table-stripped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Id</th>
+                            <th>staffno</th>
+                            <th>sailpno</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobno</th>
+                            <th>Grade</th>
+                            <th>Design</th>
+                            <th>Deptt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for account in accounts %}
+                            <tr>
+                                <td></td>
+                                <td>{{account.uuid}}</td>
+                                <td>{{account.staffno}}</td>
+                                <td>{{account.sailpno}}</td>
+                                <td>{{account.name}}</td>
+                                <td>{{account.email}}</td>
+                                <td>{{account.mobno}}</td>
+                                <td>{{account.grade}}</td>
+                                <td>{{account.designation}}</td>
+                                <td>{{account.deptt}}</td>
+                                
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>

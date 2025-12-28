@@ -1,0 +1,76 @@
+<style type="text/css">
+    .bv-form .form-control {
+        padding: 2px 4px !important;
+        height:auto!important;
+      }
+</style>
+<div class="content-wrapper">
+    <!-- About Section -->
+    <section id="about" class="about section">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row align-items-center">
+          <div class="col-lg-12">
+            <div class="about-content" data-aos="fade-up" data-aos-delay="200">
+              <h3>Welcome, {{user.name}}!</h3>
+              <p>
+                <b>{{user.desig}}, {{user.deptt}} ({{user.org}})</b> |
+                <a href="mailto:{{user.email}}"><b class="bx bx-envelope"></b> {{user.email}}</a> |
+                <a href="tel:{{user.mobno}}"><b class="bx bx-mobile"></b> {{user.mobno}}</a>
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="alert alert-light">
+              <div class"card">
+              <div class="card-header">
+                 <p class="title-text">
+                  Visit Details so far are as follows: 
+                  <a href="/home/add-update-visit/" class="btn btn-sm btn-link">
+                    <b class="bx bx-plus-circle"></b> Add New Visit 
+                  </a>
+                 </p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table datatable table-bordered table-striped" style="width: 100%;font-size: 12px;">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Organization</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for visit in visits %}
+                      <tr>
+                        <td>{{ visit.visit_date }}</td>
+                        <td>{{ visit.vstname }}</td>
+                        <td>{{ visit.vstdesig }}</td>
+                        <td>{{ visit.vstorg }}</td>
+                        <td>{{ visit.vstemail }}</td>
+                        <td>{{ visit.vstmobno }}</td>
+                        <td>
+                          <a href="/home/add-update-visit/{{visit.id}}" class="btn btn-sm btn-primary">
+                            Edit
+                          </a>
+                          <a href="/home/delete-visit/{{visit.id}}" class="btn btn-sm btn-danger">
+                            Delete
+                          </a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+            </div>
+        </div>
+
+      </div>
+    </section><!-- /About Section -->
+
+</div>
