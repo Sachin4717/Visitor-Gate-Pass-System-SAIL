@@ -1,86 +1,66 @@
 
 # Visitor Gate Pass System
 
-## 📌 Project Overview
-The **Visitor Gate Pass System** is a web-based application developed during my on-site internship at **SAIL – Bokaro Steel Plant**. The system digitizes and streamlines the process of visitor entry management, replacing manual register-based methods with a secure and efficient online solution.
-
-This application ensures accurate visitor data collection, approval tracking, and improved security at the entry gates.
-
----
-
-## 🎯 Objectives
-- Digitize the visitor entry and approval process  
-- Reduce manual paperwork and human errors  
-- Enhance security and traceability of visitors  
-- Provide a user-friendly interface for staff and administrators  
+## Overview
+The **Visitor Gate Pass System** is a web-based application developed during my internship at **SAIL – Bokaro Steel Plant**.
+The project digitizes the visitor entry process, replacing manual registers with a secure and efficient online system.
 
 ---
 
-## 🛠️ Tech Stack
-**Frontend:**
-- HTML5  
-- CSS3  
-- Bootstrap  
-- Angular  
-
-**Backend:**
-- Python  
-- Django  
-
-**Database:**
-- SQLite (development)  
+## Objective
+- Automate visitor registration and approval
+- Reduce paperwork and manual errors
+- Improve security and traceability of visitor data
+- Provide an easy-to-use admin interface
 
 ---
 
-## ⚙️ Key Features
-- Visitor registration with personal and visit details  
-- Admin approval and rejection system  
-- Secure login for administrators  
-- Real-time visitor record management  
-- Search and filter visitor entries  
+## Tech Stack
+**Backend:** Python, Django  
+**Frontend:** HTML, CSS, Bootstrap  
+**Database:** SQLite  
+**Tools:** Git, GitHub, VS Code  
+
+---
+
+## Key Features
+- Visitor registration with visit details  
+- Admin login and approval system  
+- Secure data storage and management  
+- Search and tracking of visitor records  
 - Responsive user interface  
 
 ---
 
-## 🧑‍💻 My Role & Responsibilities
-- Designed and developed backend logic using Django  
-- Implemented frontend interfaces using Bootstrap and Angular  
-- Integrated frontend with backend APIs  
-- Worked with databases for storing and managing visitor data  
-- Tested application for functionality and performance  
-- Collaborated with mentors and followed industry best practices  
+## My Role & Responsibilities
+- Developed backend functionality using Django  
+- Designed and integrated frontend components  
+- Created and managed database models  
+- Implemented validation and basic security checks  
+- Tested and optimized application performance  
 
 ---
 
-## 🚀 How to Run the Project Locally
+## How to Run the Project
 1. Clone the repository  
 2. Create and activate a virtual environment  
 3. Install dependencies  
-   ```
+   ```bash
    pip install -r requirements.txt
    ```
-4. Apply migrations  
-   ```
-   python manage.py makemigrations
+4. Run migrations  
+   ```bash
    python manage.py migrate
    ```
-5. Run the development server  
-   ```
+5. Start the server  
+   ```bash
    python manage.py runserver
    ```
 6. Open `http://127.0.0.1:8000/` in your browser  
 
 ---
 
-## 📈 Learning Outcomes
-- Practical experience with Django framework  
-- Understanding of real-world enterprise applications  
-- Improved frontend-backend integration skills  
-- Exposure to professional development workflows  
-
----
-
-## 📄 Internship Details
+## Internship Details
 - **Organization:** SAIL – Bokaro Steel Plant  
 - **Role:** Web Developer Intern  
 - **Duration:** June 2025 – August 2025  
@@ -88,12 +68,17 @@ This application ensures accurate visitor data collection, approval tracking, an
 
 ---
 
-## 📬 Contact
+## Learning Outcomes
+- Practical experience with Django framework  
+- Understanding of real-world enterprise systems  
+- Improved backend and frontend integration skills  
+
+---
+
+## Author
 **Sachin Kumar**  
-Email: sachinagrawal2244@gmail.com  
 GitHub: https://github.com/Sachin4717  
 LinkedIn: https://linkedin.com/in/sachin-kumar-451053345  
 
 ---
-
-⭐ If you find this project useful, feel free to give it a star!
+⭐ Feel free to star the repository if you find this project useful!
